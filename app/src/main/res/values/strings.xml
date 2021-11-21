@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">StoreMe</string>
+    <string name="tab_text_1">All</string>
+    <string name="tab_text_2">Media</string>
+    <string name="tab_text_3">Wine Cave</string>
+    <string name="tab_text_4">Kitchen</string>
+    <string name="tab_text_5">Moving</string>
+</resources>
