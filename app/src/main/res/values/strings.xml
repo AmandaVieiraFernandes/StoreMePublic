@@ -5,5 +5,13 @@
     <string name="tab_text_3">Wine Cave</string>
     <string name="tab_text_4">Kitchen</string>
     <string name="tab_text_5">Moving</string>
-    <string name="Title_NewObject">Store new object</string>
+    <string name="newobject_media">Store new media</string>
+    <string name="type">Type</string>
+    <string-array name="types_media">
+        <item>Book</item>
+        <item>Movie</item>
+        <item>Music</item>
+        <item>Video Game</item>
+        <item>Other</item>
+    </string-array>
 </resources>
