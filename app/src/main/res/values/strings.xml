@@ -7,6 +7,20 @@
     <string name="tab_text_5">Moving</string>
     <string name="newobject_media">Store new media</string>
     <string name="type">Type</string>
+    <string-array name="attribute1_string">
+        <item>Title</item>
+        <item>Title</item>
+        <item>Title</item>
+        <item>Title</item>
+        <item>blabla</item>
+    </string-array>
+    <string-array name="attribute2_string">
+        <item>author</item>
+        <item>director</item>
+        <item>singer</item>
+        <item>Producer</item>
+        <item>blabla</item>
+    </string-array>
     <string-array name="types_media">
         <item>Book</item>
         <item>Movie</item>
