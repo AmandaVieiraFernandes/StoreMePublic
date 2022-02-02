@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class NewObject extends Activity {
     private ObjectDataBase myDataBase;
     private Spinner typeSpinner;

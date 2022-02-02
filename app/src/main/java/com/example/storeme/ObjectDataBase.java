@@ -2,8 +2,11 @@ package com.example.storeme;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 public class ObjectDataBase extends SQLiteOpenHelper {
     private static final String DB_NAME = "MainDB";
@@ -48,10 +51,31 @@ public class ObjectDataBase extends SQLiteOpenHelper {
         db.close();
     }
 
+    // this method is used to get object in sqlite database by id
+    public ArrayList<StoreMeObject> getAllObjects(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursorObjects = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+
+        ArrayList<StoreMeObject> StoreMeObjectArrayList = new ArrayList<>();
+
+        if(cursorObjects.moveToFirst()){
+            do{
+                StoreMeObjectArrayList.add(new StoreMeObject(cursorObjects.getString(1),
+                        cursorObjects.getString(2),cursorObjects.getString(3)));
+            }while (cursorObjects.moveToNext());
+        }
+
+        cursorObjects.close();
+
+        return StoreMeObjectArrayList;
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // this method is called to check if the table exists already.
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
 }
