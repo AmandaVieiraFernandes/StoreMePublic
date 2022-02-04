@@ -77,18 +77,23 @@ public class NewObject extends Activity {
 
                 // validating if the text fields are empty or not.
                 if (objectAtt1_BD.isEmpty() && objectAtt2_BD.isEmpty()) {
-                    Toast.makeText(NewObject.this, "Please enter all the data..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewObject.this, "Please enter all the data", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                // check if object already exists in database
+                if (myDataBase.checkIfObjectExists(objectType_DB, objectAtt1_BD, objectAtt2_BD)){
+                    Toast.makeText(NewObject.this, "Object already exists", Toast.LENGTH_SHORT).show();
+                }else{
+                    // on below line we are calling a method to add new
+                    // course to sqlite data and pass all our values to it.
+                    myDataBase.addNewObject(objectType_DB, objectAtt1_BD, objectAtt2_BD);
 
-                // on below line we are calling a method to add new
-                // course to sqlite data and pass all our values to it.
-                myDataBase.addNewObject(objectType_DB, objectAtt1_BD, objectAtt2_BD);
+                    // after adding the data we are displaying a toast message.
+                    Toast.makeText(NewObject.this, "Object has been added", Toast.LENGTH_SHORT).show();
+                    attribute1_editText.setText("");
+                    attribute2_editText.setText("");
+                }
 
-                // after adding the data we are displaying a toast message.
-                Toast.makeText(NewObject.this, "Object has been added.", Toast.LENGTH_SHORT).show();
-                attribute1_editText.setText("");
-                attribute2_editText.setText("");
             }
         });
     }

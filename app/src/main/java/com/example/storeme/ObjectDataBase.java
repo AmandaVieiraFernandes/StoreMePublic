@@ -3,9 +3,12 @@ package com.example.storeme;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class ObjectDataBase extends SQLiteOpenHelper {
@@ -51,13 +54,14 @@ public class ObjectDataBase extends SQLiteOpenHelper {
         db.close();
     }
 
-    // this method is used to get object in sqlite database by id
+    // this method is used to get all objects in sqlite database
     public ArrayList<StoreMeObject> getAllObjects(){
+        ArrayList<StoreMeObject> StoreMeObjectArrayList = new ArrayList<>();
+
+        try {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursorObjects = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-
-        ArrayList<StoreMeObject> StoreMeObjectArrayList = new ArrayList<>();
 
         if(cursorObjects.moveToFirst()){
             do{
@@ -67,8 +71,32 @@ public class ObjectDataBase extends SQLiteOpenHelper {
         }
 
         cursorObjects.close();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
 
         return StoreMeObjectArrayList;
+    }
+
+    // this method is used to check if object is already in sqlite database
+    public boolean checkIfObjectExists(String type, String attribute1, String attribute2){
+        ArrayList<StoreMeObject> StoreMeObjectArrayList = new ArrayList<>();
+        Connection conn = null;
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            String query = "SELECT *  FROM " + TABLE_NAME + " WHERE " + TYPE_COL + " = ? AND " + ATTRIBUTE1_COL + " = ? AND " + ATTRIBUTE2_COL + " = ?";
+            Cursor cursorObjects = db.rawQuery(query, new String[] {type,attribute1,attribute2});
+
+            if (cursorObjects.getCount() > 0) {
+                return true;
+            }
+
+            cursorObjects.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     @Override
