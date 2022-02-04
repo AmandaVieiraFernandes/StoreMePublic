@@ -11,9 +11,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.storeme.ObjectDataBase;
+import com.example.storeme.ObjectListAdapter;
 import com.example.storeme.R;
+import com.example.storeme.StoreMeObject;
 import com.example.storeme.databinding.FragmentMainBinding;
+
+import java.util.ArrayList;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -52,13 +59,26 @@ public class PlaceholderFragment extends Fragment {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.sectionLabel;
+        ArrayList<StoreMeObject> objectList = new ArrayList<StoreMeObject>();
+        ObjectDataBase myDataBase = new ObjectDataBase(root.getContext());
+
+        objectList = myDataBase.getAllObjects();
+
+        ObjectListAdapter objectListAdapter = new ObjectListAdapter(objectList,root.getContext());
+        RecyclerView objectRecyclerView = binding.objectList;
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext(),RecyclerView.VERTICAL,false);
+        objectRecyclerView.setLayoutManager(linearLayoutManager);
+
+        objectRecyclerView.setAdapter(objectListAdapter);
+
+        /*final TextView textView = binding.sectionLabel;
         pageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
         return root;
     }
 
