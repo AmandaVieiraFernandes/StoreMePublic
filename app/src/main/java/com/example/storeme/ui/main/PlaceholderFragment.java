@@ -31,6 +31,7 @@ public class PlaceholderFragment extends Fragment {
 
     private PageViewModel pageViewModel;
     private FragmentMainBinding binding;
+    private int index;
 
     public static PlaceholderFragment newInstance(int index) {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -44,7 +45,7 @@ public class PlaceholderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
-        int index = 1;
+        index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
@@ -59,10 +60,12 @@ public class PlaceholderFragment extends Fragment {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        ArrayList<StoreMeObject> objectList = new ArrayList<StoreMeObject>();
         ObjectDataBase myDataBase = new ObjectDataBase(root.getContext());
 
-        objectList = myDataBase.getAllObjects();
+        ArrayList<StoreMeObject> objectList = new ArrayList<>();
+        if(index == 1) {
+            objectList = myDataBase.getAllObjects();
+        }
 
         ObjectListAdapter objectListAdapter = new ObjectListAdapter(objectList,root.getContext());
         RecyclerView objectRecyclerView = binding.objectList;

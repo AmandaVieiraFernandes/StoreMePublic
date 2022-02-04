@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = binding.fab;
-        //PlaceholderFragment fragmentMain = (PlaceholderFragment) sectionsPagerAdapter.getItem(viewPager.getCurrentItem());
 
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
