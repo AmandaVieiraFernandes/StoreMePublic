@@ -51,7 +51,8 @@ public class PlaceholderFragment extends Fragment {
         }
         pageViewModel.setIndex(index);
     }
-
+    // The onCreateView method is called when Fragment should create its View object hierarchy,
+    // either dynamically or via XML layout inflation.
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
@@ -59,21 +60,6 @@ public class PlaceholderFragment extends Fragment {
 
         binding = FragmentMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        ObjectDataBase myDataBase = new ObjectDataBase(root.getContext());
-
-        ArrayList<StoreMeObject> objectList = new ArrayList<>();
-        if(index == 1) {
-            objectList = myDataBase.getAllObjects();
-        }
-
-        ObjectListAdapter objectListAdapter = new ObjectListAdapter(objectList,root.getContext());
-        RecyclerView objectRecyclerView = binding.objectList;
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext(),RecyclerView.VERTICAL,false);
-        objectRecyclerView.setLayoutManager(linearLayoutManager);
-
-        objectRecyclerView.setAdapter(objectListAdapter);
 
         /*final TextView textView = binding.sectionLabel;
         pageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -83,6 +69,26 @@ public class PlaceholderFragment extends Fragment {
             }
         });*/
         return root;
+    }
+
+    // This event is triggered soon after onCreateView()
+    // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
+    @Override
+    public void onViewCreated(View view, Bundle savedInstance){
+        ObjectDataBase myDataBase = new ObjectDataBase(view.getContext());
+
+        ArrayList<StoreMeObject> objectList = new ArrayList<>();
+        if(index == 1) {
+            objectList = myDataBase.getAllObjects();
+        }
+
+        ObjectListAdapter objectListAdapter = new ObjectListAdapter(objectList,view.getContext());
+        RecyclerView objectRecyclerView = binding.objectList;
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(),RecyclerView.VERTICAL,false);
+        objectRecyclerView.setLayoutManager(linearLayoutManager);
+
+        objectRecyclerView.setAdapter(objectListAdapter);
     }
 
     @Override
