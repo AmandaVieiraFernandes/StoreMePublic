@@ -1,5 +1,6 @@
 package com.example.storeme;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,11 +10,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +30,7 @@ import com.example.storeme.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private ObjectDataBase myDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = binding.fab;
+        // creating a new ObjectDataBase class and passing our context to it.
+        myDataBase = new ObjectDataBase(this);
 
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -71,9 +78,38 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                FragmentManager fm = getSupportFragmentManager();
+                NewObject editDialogFragment = NewObject.newInstance("Add new object");
+                editDialogFragment.show(fm, "activity_newobject");
+
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
-                startActivity(new Intent(MainActivity.this,NewObject.class));
+                /*startActivity(new Intent(MainActivity.this,NewObject.class));*/
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(binding.getRoot().getContext());
+                builder.setTitle("Title");
+
+                // Set up the input
+                final EditText input = new EditText(binding.getRoot().getContext());
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT );
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String m_Text = input.getText().toString();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();*/
             }
         });
     }
