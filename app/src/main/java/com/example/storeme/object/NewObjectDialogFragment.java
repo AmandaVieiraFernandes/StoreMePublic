@@ -1,9 +1,6 @@
-package com.example.storeme;
+package com.example.storeme.object;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +16,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import java.util.ArrayList;
+import com.example.storeme.R;
 
-public class NewObject extends DialogFragment {
+public class NewObjectDialogFragment extends DialogFragment {
     //Variables
     private ObjectDataBase myDataBase;
     private Spinner typeSpinner;
@@ -35,8 +32,8 @@ public class NewObject extends DialogFragment {
     private String objectAtt2_BD;
 
     //Constructor
-    public static NewObject newInstance(String title) {
-        NewObject frag = new NewObject();
+    public static NewObjectDialogFragment newInstance(String title) {
+        NewObjectDialogFragment frag = new NewObjectDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
         frag.setArguments(args);
@@ -46,7 +43,7 @@ public class NewObject extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_newobject, container);
+        return inflater.inflate(R.layout.dialogfragment_newobject, container);
     }
 
     @Override
@@ -135,12 +132,12 @@ public class NewObject extends DialogFragment {
         getWindow().setLayout((int)(width*.8),(int)(height*.6));
 
         // creating a new ObjectDataBase class and passing our context to it.
-        myDataBase = new ObjectDataBase(NewObject.this);
+        myDataBase = new ObjectDataBase(NewObjectDialogFragment.this);
 
         //Access spinner from activity_newobject
         typeSpinner = (Spinner) findViewById(R.id.type_spinner);
 
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(NewObject.this,
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(NewObjectDialogFragment.this,
                 android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.types_media));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -176,19 +173,19 @@ public class NewObject extends DialogFragment {
 
                 // validating if the text fields are empty or not.
                 if (objectAtt1_BD.isEmpty() && objectAtt2_BD.isEmpty()) {
-                    Toast.makeText(NewObject.this, "Please enter all the data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewObjectDialogFragment.this, "Please enter all the data", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 // check if object already exists in database
                 if (myDataBase.checkIfObjectExists(objectType_DB, objectAtt1_BD, objectAtt2_BD)){
-                    Toast.makeText(NewObject.this, "Object already exists", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewObjectDialogFragment.this, "Object already exists", Toast.LENGTH_SHORT).show();
                 }else{
                     // on below line we are calling a method to add new
                     // course to sqlite data and pass all our values to it.
                     myDataBase.addNewObject(objectType_DB, objectAtt1_BD, objectAtt2_BD);
 
                     // after adding the data we are displaying a toast message.
-                    Toast.makeText(NewObject.this, "Object has been added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewObjectDialogFragment.this, "Object has been added", Toast.LENGTH_SHORT).show();
                     attribute1_editText.setText("");
                     attribute2_editText.setText("");
                 }

@@ -1,4 +1,4 @@
-package com.example.storeme;
+package com.example.storeme.object;
 
 public class StoreMeObject {
 

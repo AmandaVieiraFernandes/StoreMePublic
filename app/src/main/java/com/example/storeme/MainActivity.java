@@ -1,28 +1,17 @@
 package com.example.storeme;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.storeme.databinding.FragmentMainBinding;
-import com.example.storeme.ui.main.PlaceholderFragment;
+import com.example.storeme.object.NewObjectDialogFragment;
+import com.example.storeme.object.ObjectDataBase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.storeme.ui.main.SectionsPagerAdapter;
 import com.example.storeme.databinding.ActivityMainBinding;
@@ -80,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 FragmentManager fm = getSupportFragmentManager();
-                NewObject editDialogFragment = NewObject.newInstance("Add new object");
+                NewObjectDialogFragment editDialogFragment = NewObjectDialogFragment.newInstance("Add new object");
                 editDialogFragment.show(fm, "activity_newobject");
 
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
-                /*startActivity(new Intent(MainActivity.this,NewObject.class));*/
+                /*startActivity(new Intent(MainActivity.this,NewObjectDialogFragment.class));*/
                 /*AlertDialog.Builder builder = new AlertDialog.Builder(binding.getRoot().getContext());
                 builder.setTitle("Title");
 

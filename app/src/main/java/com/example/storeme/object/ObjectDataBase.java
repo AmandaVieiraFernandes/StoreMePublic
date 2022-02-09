@@ -1,4 +1,4 @@
-package com.example.storeme;
+package com.example.storeme.object;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class ObjectDataBase extends SQLiteOpenHelper {

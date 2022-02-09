@@ -1,4 +1,4 @@
-package com.example.storeme;
+package com.example.storeme.object;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.storeme.R;
 
 import java.util.ArrayList;
 
@@ -26,7 +28,7 @@ public class ObjectListAdapter extends RecyclerView.Adapter<ObjectListAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder (@NonNull ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_objectlist, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_object, parent,false);
         return new ViewHolder(view);
     }
 
