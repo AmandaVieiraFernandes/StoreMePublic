@@ -37,39 +37,19 @@ public class MainActivity extends AppCompatActivity {
         // creating a new ObjectDataBase class and passing our context to it.
         myDataBase = new ObjectDataBase(this);
 
-        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                switch(position){
-                    case 0:
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 FragmentManager fm = getSupportFragmentManager();
-                NewObjectDialogFragment editDialogFragment = NewObjectDialogFragment.newInstance("Add new object");
+                String dialog_name = null;
+                if(tabs.getSelectedTabPosition()==1){
+                    dialog_name = "Add new media";
+                }else{
+                    dialog_name = "Add new object";
+                }
+                NewObjectDialogFragment editDialogFragment = NewObjectDialogFragment.newInstance(dialog_name);
                 editDialogFragment.show(fm, "activity_newobject");
 
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

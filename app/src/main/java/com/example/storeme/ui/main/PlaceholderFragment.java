@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -11,10 +12,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.storeme.R;
 import com.example.storeme.object.ObjectDataBase;
 import com.example.storeme.object.ObjectListAdapter;
 import com.example.storeme.object.StoreMeObject;
 import com.example.storeme.databinding.FragmentMainBinding;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
@@ -24,10 +27,8 @@ import java.util.ArrayList;
 public class PlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-
     private PageViewModel pageViewModel;
     private FragmentMainBinding binding;
-    private int index;
 
     public static PlaceholderFragment newInstance(int index) {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -41,7 +42,7 @@ public class PlaceholderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
-        index = 1;
+        int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
@@ -57,13 +58,6 @@ public class PlaceholderFragment extends Fragment {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        /*final TextView textView = binding.sectionLabel;
-        pageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
         return root;
     }
 
@@ -74,7 +68,8 @@ public class PlaceholderFragment extends Fragment {
         ObjectDataBase myDataBase = new ObjectDataBase(view.getContext());
 
         ArrayList<StoreMeObject> objectList = new ArrayList<>();
-        if(index == 1) {
+
+        if(getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
             objectList = myDataBase.getAllObjects();
         }
 

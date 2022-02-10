@@ -15,12 +15,21 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.storeme.R;
+import com.example.storeme.ui.main.PlaceholderFragment;
+
+import org.w3c.dom.Text;
+
+import java.util.Collections;
+import java.util.List;
 
 public class NewObjectDialogFragment extends DialogFragment {
     //Variables
     private ObjectDataBase myDataBase;
+    private TextView dialog_title;
     private Spinner typeSpinner;
     private TextView no_attribute1_Text;
     private TextView no_attribute2_Text;
@@ -49,6 +58,12 @@ public class NewObjectDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Fetch arguments from bundle and set title
+        String title = getArguments().getString("title", "Add new object");
+        dialog_title = view.findViewById(R.id.newobject_label);
+        dialog_title.setText(title);
+
         // creating a new ObjectDataBase class and passing our context to it.
         myDataBase = new ObjectDataBase(view.getContext());
 
@@ -96,6 +111,7 @@ public class NewObjectDialogFragment extends DialogFragment {
                 if (myDataBase.checkIfObjectExists(objectType_DB, objectAtt1_BD, objectAtt2_BD)){
                     Toast.makeText(view.getContext(), "Object already exists", Toast.LENGTH_SHORT).show();
                 }else{
+
                     // on below line we are calling a method to add new
                     // course to sqlite data and pass all our values to it.
                     myDataBase.addNewObject(objectType_DB, objectAtt1_BD, objectAtt2_BD);
@@ -104,93 +120,18 @@ public class NewObjectDialogFragment extends DialogFragment {
                     Toast.makeText(view.getContext(), "Object has been added", Toast.LENGTH_SHORT).show();
                     attribute1_editText.setText("");
                     attribute2_editText.setText("");
-                }
 
+                    //update fragments with new added object
+                    List<Fragment> updFrag = getParentFragmentManager().getFragments();
+                    for(Fragment fr : updFrag){
+                        if(fr.getClass().equals(PlaceholderFragment.class)){
+                            getParentFragmentManager().beginTransaction().detach(fr).commit();
+                            getParentFragmentManager().beginTransaction().attach(fr).commit();
+                        }
+                    }
+                }
             }
         });
-        // Fetch arguments from bundle and set title
-        String title = getArguments().getString("title", "Add new object");
-        getDialog().setTitle(title);
-        // Show soft keyboard automatically and request focus to field
-        typeSpinner.requestFocus();
-        getDialog().getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
     }
-
-    /*@Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_newobject);
-
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-
-        getWindow().setLayout((int)(width*.8),(int)(height*.6));
-
-        // creating a new ObjectDataBase class and passing our context to it.
-        myDataBase = new ObjectDataBase(NewObjectDialogFragment.this);
-
-        //Access spinner from activity_newobject
-        typeSpinner = (Spinner) findViewById(R.id.type_spinner);
-
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(NewObjectDialogFragment.this,
-                android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.types_media));
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        typeSpinner.setAdapter(myAdapter);
-
-        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TextView no_attribute1_Text = (TextView) findViewById(R.id.no_attribute1_label);
-                no_attribute1_Text.setText(getResources().getStringArray(R.array.attribute1_string)[position]);
-                TextView no_attribute2_Text = (TextView) findViewById(R.id.no_attribute2_label);
-                no_attribute2_Text.setText(getResources().getStringArray(R.array.attribute2_string)[position]);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        //Access add new object button from activity_newobject
-        Button addObjectButton = (Button) findViewById(R.id.object_button);
-
-        addObjectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText attribute1_editText = (EditText) findViewById(R.id.attibute1_edit);
-                EditText attribute2_editText = (EditText) findViewById(R.id.attibute2_edit);
-
-                String objectType_DB = typeSpinner.getSelectedItem().toString();
-                String objectAtt1_BD = attribute1_editText.getText().toString();
-                String objectAtt2_BD = attribute2_editText.getText().toString();
-
-                // validating if the text fields are empty or not.
-                if (objectAtt1_BD.isEmpty() && objectAtt2_BD.isEmpty()) {
-                    Toast.makeText(NewObjectDialogFragment.this, "Please enter all the data", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                // check if object already exists in database
-                if (myDataBase.checkIfObjectExists(objectType_DB, objectAtt1_BD, objectAtt2_BD)){
-                    Toast.makeText(NewObjectDialogFragment.this, "Object already exists", Toast.LENGTH_SHORT).show();
-                }else{
-                    // on below line we are calling a method to add new
-                    // course to sqlite data and pass all our values to it.
-                    myDataBase.addNewObject(objectType_DB, objectAtt1_BD, objectAtt2_BD);
-
-                    // after adding the data we are displaying a toast message.
-                    Toast.makeText(NewObjectDialogFragment.this, "Object has been added", Toast.LENGTH_SHORT).show();
-                    attribute1_editText.setText("");
-                    attribute2_editText.setText("");
-                }
-
-            }
-        });
-    }*/
 }
