@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,14 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.storeme.R;
 import com.example.storeme.ui.main.PlaceholderFragment;
 
-import org.w3c.dom.Text;
-
-import java.util.Collections;
 import java.util.List;
 
 public class NewObjectDialogFragment extends DialogFragment {
@@ -68,7 +63,7 @@ public class NewObjectDialogFragment extends DialogFragment {
         myDataBase = new ObjectDataBase(view.getContext());
 
         //Access spinner from activity_newobject
-        typeSpinner = (Spinner) view.findViewById(R.id.type_spinner);
+        typeSpinner = (Spinner) view.findViewById(R.id.no_type_spinner);
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(view.getContext(),
                 android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.types_media));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -90,9 +85,9 @@ public class NewObjectDialogFragment extends DialogFragment {
         });
 
         //Access add new object button from activity_newobject
-        addObjectButton = (Button) view.findViewById(R.id.object_button);
-        attribute1_editText = (EditText) view.findViewById(R.id.attibute1_edit);
-        attribute2_editText = (EditText) view.findViewById(R.id.attibute2_edit);
+        addObjectButton = (Button) view.findViewById(R.id.no_add_button);
+        attribute1_editText = (EditText) view.findViewById(R.id.no_attibute1_edit);
+        attribute2_editText = (EditText) view.findViewById(R.id.no_attibute2_edit);
         //Button click listener
         addObjectButton.setOnClickListener(new View.OnClickListener() {
             @Override

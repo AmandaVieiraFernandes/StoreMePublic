@@ -5,7 +5,6 @@
     <string name="tab_text_3">Wine Cave</string>
     <string name="tab_text_4">Kitchen</string>
     <string name="tab_text_5">Moving</string>
-    <string name="newobject_media">Store new media</string>
     <string name="type">Type</string>
     <string name="loginapp_name">StoreMeLogin</string>
     <string-array name="attribute1_string">

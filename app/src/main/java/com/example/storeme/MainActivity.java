@@ -49,36 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     dialog_name = "Add new object";
                 }
-                NewObjectDialogFragment editDialogFragment = NewObjectDialogFragment.newInstance(dialog_name);
-                editDialogFragment.show(fm, "activity_newobject");
-
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                /*startActivity(new Intent(MainActivity.this,NewObjectDialogFragment.class));*/
-                /*AlertDialog.Builder builder = new AlertDialog.Builder(binding.getRoot().getContext());
-                builder.setTitle("Title");
-
-                // Set up the input
-                final EditText input = new EditText(binding.getRoot().getContext());
-                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_TEXT );
-                builder.setView(input);
-
-                // Set up the buttons
-                builder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String m_Text = input.getText().toString();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();*/
+                NewObjectDialogFragment addDialogFragment = NewObjectDialogFragment.newInstance(dialog_name);
+                addDialogFragment.show(fm, "dialog_newobject");
             }
         });
     }

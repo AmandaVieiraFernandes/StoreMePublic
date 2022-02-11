@@ -5,8 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.storeme.R;
@@ -55,6 +58,18 @@ public class ObjectListAdapter extends RecyclerView.Adapter<ObjectListAdapter.Vi
             objectTypeCard = itemView.findViewById(R.id.cardObjectType);
             objectAtt1Card = itemView.findViewById(R.id.cardObjectAttribute1);
             objectAtt2Card = itemView.findViewById(R.id.cardObjectAttribute2);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    int id = getAdapterPosition();
+                    FragmentActivity activity = (FragmentActivity)(mcontext);
+                    FragmentManager fm = activity.getSupportFragmentManager();
+                    StoreMeObject obj = mObjectsArrayList.get(id);
+                    ViewObjectDialogFragment viewDialogFragment = ViewObjectDialogFragment.newInstance(obj);
+                    viewDialogFragment.show(fm, "dialog_viewobject");
+                }
+            });
         }
 
     }
