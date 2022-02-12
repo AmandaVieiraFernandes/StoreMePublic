@@ -47,6 +47,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onSignUpClick(View view) {
-
+        Toast.makeText(getApplicationContext(), "Sign up here", Toast.LENGTH_SHORT).show();
     }
 }

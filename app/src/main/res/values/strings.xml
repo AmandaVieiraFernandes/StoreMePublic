@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StoreMe</string>
+    <string name="app_name"></string>
     <string name="tab_text_1">All</string>
     <string name="tab_text_2">Media</string>
     <string name="tab_text_3">Wine Cave</string>
@@ -15,9 +15,9 @@
         <item>blabla</item>
     </string-array>
     <string-array name="attribute2_string">
-        <item>author</item>
-        <item>director</item>
-        <item>singer</item>
+        <item>Author</item>
+        <item>Director</item>
+        <item>Singer</item>
         <item>Producer</item>
         <item>blabla</item>
     </string-array>
