@@ -9,7 +9,8 @@ public class StoreMeObject {
     private String attribute2;
 
     //Constructor
-    public StoreMeObject (String type, String attribute1, String attribute2){
+    public StoreMeObject (int id, String type, String attribute1, String attribute2){
+        this.id = id;
         this.type = type;
         this.attribute1 = attribute1;
         this.attribute2 = attribute2;

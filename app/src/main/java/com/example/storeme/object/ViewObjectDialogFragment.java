@@ -25,10 +25,13 @@ import java.util.List;
 
 public class ViewObjectDialogFragment extends DialogFragment {
     //Variables
+    private ObjectDataBase myDataBase;
     private TextView object_attribute1_Text;
     private TextView object_attribute2_Text;
     private ImageButton editButton;
     private ImageButton deleteButton;
+    private Button saveButton;
+    private Button cancelButton;
     private EditText type_editText;
     private EditText attribute1_editText;
     private EditText attribute2_editText;
@@ -37,6 +40,7 @@ public class ViewObjectDialogFragment extends DialogFragment {
     public static ViewObjectDialogFragment newInstance(StoreMeObject object) {
         ViewObjectDialogFragment frag = new ViewObjectDialogFragment();
         Bundle args = new Bundle();
+        args.putInt("id", object.getObjectId());
         args.putString("type", object.getObjectType());
         args.putString("att1", object.getObjectAttribute1());
         args.putString("att2", object.getObjectAttribute2());
@@ -58,7 +62,7 @@ public class ViewObjectDialogFragment extends DialogFragment {
         object_attribute1_Text = view.findViewById(R.id.object_att1_label);
         object_attribute2_Text = view.findViewById(R.id.object_att2_label);
         List<String> list = Arrays.asList(getResources().getStringArray(R.array.types_media));
-        int index = list.indexOf(getArguments().getString("type")) + 1;
+        int index = list.indexOf(getArguments().getString("type"));
         object_attribute1_Text.setText(getResources().getStringArray(R.array.attribute1_string)[index]);
         object_attribute2_Text.setText(getResources().getStringArray(R.array.attribute2_string)[index]);
 
@@ -73,19 +77,79 @@ public class ViewObjectDialogFragment extends DialogFragment {
         //Access buttons from layout
         editButton = view.findViewById(R.id.object_edit_button);
         deleteButton = view.findViewById(R.id.object_delete_button);
+        saveButton = view.findViewById(R.id.vosave_button);
+        cancelButton = view.findViewById(R.id.vocancel_button);
+
+        // creating a new ObjectDataBase class and passing our context to it.
+        myDataBase = new ObjectDataBase(view.getContext());
 
         //Button click listener
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(view.getContext(), "Do something here", Toast.LENGTH_SHORT).show();
+                type_editText.setEnabled(true);
+                attribute1_editText.setEnabled(true);
+                attribute2_editText.setEnabled(true);
+                saveButton.setVisibility(View.VISIBLE);
+                cancelButton.setVisibility(View.VISIBLE);
+
+                saveButton.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        if(myDataBase.updateObject(getArguments().getInt("id"),type_editText.getText().toString(),attribute1_editText.getText().toString(),attribute2_editText.getText().toString())){
+                            //update fragments with deleted object
+                            List<Fragment> updFrag = getParentFragmentManager().getFragments();
+                            for(Fragment fr : updFrag) {
+                                if (fr.getClass().equals(PlaceholderFragment.class)) {
+                                    getParentFragmentManager().beginTransaction().detach(fr).commit();
+                                    getParentFragmentManager().beginTransaction().attach(fr).commit();
+                                }
+                            }
+
+                            type_editText.setEnabled(false);
+                            attribute1_editText.setEnabled(false);
+                            attribute2_editText.setEnabled(false);
+                            saveButton.setVisibility(View.INVISIBLE);
+                            cancelButton.setVisibility(View.INVISIBLE);
+
+                            Toast.makeText(v.getContext(), "Object updated successfully", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(v.getContext(), "Problem when updating object", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                cancelButton.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        type_editText.setEnabled(false);
+                        attribute1_editText.setEnabled(false);
+                        attribute2_editText.setEnabled(false);
+                        saveButton.setVisibility(View.INVISIBLE);
+                        cancelButton.setVisibility(View.INVISIBLE);
+
+                        Toast.makeText(v.getContext(), "Object edit cancelled", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(view.getContext(), "Do something here", Toast.LENGTH_SHORT).show();
+                if (myDataBase.deleteObject(getArguments().getInt("id"))){
+                    //update fragments with deleted object
+                    List<Fragment> updFrag = getParentFragmentManager().getFragments();
+                    for(Fragment fr : updFrag) {
+                        if (fr.getClass().equals(PlaceholderFragment.class)) {
+                            getParentFragmentManager().beginTransaction().detach(fr).commit();
+                            getParentFragmentManager().beginTransaction().attach(fr).commit();
+                        }
+                    }
+                    Toast.makeText(v.getContext(), "Object deleted successfully", Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(v.getContext(), "Problem in deleting object", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

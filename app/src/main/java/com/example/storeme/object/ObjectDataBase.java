@@ -64,7 +64,7 @@ public class ObjectDataBase extends SQLiteOpenHelper {
 
         if(cursorObjects.moveToFirst()){
             do{
-                StoreMeObjectArrayList.add(new StoreMeObject(cursorObjects.getString(1),
+                StoreMeObjectArrayList.add(new StoreMeObject(cursorObjects.getInt(0),cursorObjects.getString(1),
                         cursorObjects.getString(2),cursorObjects.getString(3)));
             }while (cursorObjects.moveToNext());
         }
@@ -79,8 +79,6 @@ public class ObjectDataBase extends SQLiteOpenHelper {
 
     // this method is used to check if object is already in sqlite database
     public boolean checkIfObjectExists(String type, String attribute1, String attribute2){
-        ArrayList<StoreMeObject> StoreMeObjectArrayList = new ArrayList<>();
-        Connection conn = null;
         try {
             SQLiteDatabase db = this.getReadableDatabase();
             String query = "SELECT *  FROM " + TABLE_NAME + " WHERE " + TYPE_COL + " = ? AND " + ATTRIBUTE1_COL + " = ? AND " + ATTRIBUTE2_COL + " = ?";
@@ -91,6 +89,37 @@ public class ObjectDataBase extends SQLiteOpenHelper {
             }
 
             cursorObjects.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean deleteObject(int id){
+        try{
+            SQLiteDatabase db = this.getReadableDatabase();
+            db.delete(TABLE_NAME, ID_COL + "=?",new String[]{String.valueOf(id)});
+            db.close();
+            return true;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateObject(int id, String type, String att1, String att2){
+        try{
+            SQLiteDatabase db = this.getReadableDatabase();
+            ContentValues values  = new ContentValues();
+
+            values.put(TYPE_COL, type);
+            values.put(ATTRIBUTE1_COL, att1);
+            values.put(ATTRIBUTE2_COL, att2);
+
+            db.update(TABLE_NAME, values, ID_COL + "=?", new String[]{String.valueOf(id)});
+            db.close();
+            return true;
         }catch(SQLException e){
             e.printStackTrace();
         }
