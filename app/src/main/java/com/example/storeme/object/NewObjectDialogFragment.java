@@ -31,15 +31,17 @@ public class NewObjectDialogFragment extends DialogFragment {
     private Button addObjectButton;
     private EditText attribute1_editText;
     private EditText attribute2_editText;
+    private String objectCategory_DB;
     private String objectType_DB;
     private String objectAtt1_BD;
     private String objectAtt2_BD;
 
     //Constructor
-    public static NewObjectDialogFragment newInstance(String title) {
+    public static NewObjectDialogFragment newInstance(String category,String title) {
         NewObjectDialogFragment frag = new NewObjectDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
+        args.putString("category",category);
         frag.setArguments(args);
         return frag;
     }
@@ -93,6 +95,11 @@ public class NewObjectDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
 
+                if(!getArguments().getString("category").equals("All")){
+                    objectCategory_DB = getArguments().getString("category");
+                }else{
+                    objectCategory_DB = "Media"; //TO BE CHANGED
+                }
                 objectType_DB = typeSpinner.getSelectedItem().toString();
                 objectAtt1_BD = attribute1_editText.getText().toString();
                 objectAtt2_BD = attribute2_editText.getText().toString();
@@ -103,13 +110,13 @@ public class NewObjectDialogFragment extends DialogFragment {
                     return;
                 }
                 // check if object already exists in database
-                if (myDataBase.checkIfObjectExists(objectType_DB, objectAtt1_BD, objectAtt2_BD)){
+                if (myDataBase.checkIfObjectExists(getArguments().getString("category"),objectType_DB, objectAtt1_BD, objectAtt2_BD)){
                     Toast.makeText(view.getContext(), "Object already exists", Toast.LENGTH_SHORT).show();
                 }else{
 
                     // on below line we are calling a method to add new
                     // course to sqlite data and pass all our values to it.
-                    myDataBase.addNewObject(objectType_DB, objectAtt1_BD, objectAtt2_BD);
+                    myDataBase.addNewObject(objectCategory_DB,objectType_DB, objectAtt1_BD, objectAtt2_BD);
 
                     // after adding the data we are displaying a toast message.
                     Toast.makeText(view.getContext(), "Object has been added", Toast.LENGTH_SHORT).show();

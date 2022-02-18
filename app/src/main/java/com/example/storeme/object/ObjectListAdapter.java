@@ -1,6 +1,7 @@
 package com.example.storeme.object;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,10 +43,18 @@ public class ObjectListAdapter extends RecyclerView.Adapter<ObjectListAdapter.Vi
         holder.objectTypeCard.setText(object.getObjectType());
         holder.objectAtt1Card.setText(object.getObjectAttribute1());
         holder.objectAtt2Card.setText(object.getObjectAttribute2());
+
+        CardView card = (CardView) holder.itemView.findViewById(R.id.cardview);
+
+        if (position%2!=0){
+            card.setCardBackgroundColor(holder.itemView.getResources().getColor(R.color.StoreMe_pinkcard));
+        }
+
     }
 
     @Override
     public int getItemCount(){
+
         return mObjectsArrayList.size();
     }
 

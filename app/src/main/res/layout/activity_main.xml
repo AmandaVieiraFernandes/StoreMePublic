@@ -10,29 +10,33 @@
         android:id="@+id/MainActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/StoreMe_red"
+        android:background="@color/StoreMe_white"
         android:theme="@style/Theme.StoreMe.AppBarOverlay">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="3dp"
-            android:fontFamily="serif"
+            android:drawableLeft="@drawable/storemelogosmall"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/bukhari_script"
             android:gravity="center"
             android:minHeight="?actionBarSize"
             android:padding="@dimen/appbar_padding"
             android:text="@string/app_name"
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
             android:textColor="@color/StoreMe_black"
-            app:drawableLeftCompat="@drawable/storemelogosmall" />
+            android:textSize="24dp" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/StoreMe_white"
             app:tabGravity="start"
-            app:tabMode="scrollable" />
+            app:tabIndicatorColor="@color/StoreMe_red"
+            app:tabMode="scrollable"
+            app:tabTextColor="@color/StoreMe_red" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
@@ -48,6 +52,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
+        app:backgroundTint="@color/StoreMe_blue"
         app:maxImageSize="50dp"
         app:srcCompat="@android:drawable/ic_input_add" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,31 +1,29 @@
 <resources>
-    <string name="app_name"></string>
-    <string name="tab_text_1">All</string>
-    <string name="tab_text_2">Media</string>
-    <string name="tab_text_3">Wine Cave</string>
-    <string name="tab_text_4">Kitchen</string>
-    <string name="tab_text_5">Moving</string>
-    <string name="type">Type</string>
-    <string name="loginapp_name">StoreMeLogin</string>
+    <string name="app_name">Store me</string>
+    <string name="loginapp_name">Store me</string>
+    <string-array name="tabs_string">
+        <item>All</item>
+        <item>Media</item>
+        <item>Wine Cave</item>
+        <item>Kitchen</item>
+        <item>Moving</item>
+    </string-array>
     <string-array name="attribute1_string">
         <item>Title</item>
         <item>Title</item>
         <item>Title</item>
         <item>Title</item>
-        <item>blabla</item>
     </string-array>
     <string-array name="attribute2_string">
         <item>Author</item>
         <item>Director</item>
         <item>Singer</item>
         <item>Producer</item>
-        <item>blabla</item>
     </string-array>
     <string-array name="types_media">
         <item>Book</item>
         <item>Movie</item>
         <item>Music</item>
         <item>Video Game</item>
-        <item>Other</item>
     </string-array>
 </resources>

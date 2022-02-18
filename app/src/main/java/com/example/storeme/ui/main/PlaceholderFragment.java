@@ -67,11 +67,8 @@ public class PlaceholderFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstance){
         ObjectDataBase myDataBase = new ObjectDataBase(view.getContext());
 
-        ArrayList<StoreMeObject> objectList = new ArrayList<>();
-
-        if(getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-            objectList = myDataBase.getAllObjects();
-        }
+        String cat = getResources().getStringArray(R.array.tabs_string)[getArguments().getInt(ARG_SECTION_NUMBER)-1];
+        ArrayList<StoreMeObject> objectList = myDataBase.getObjectsByCategory(cat);
 
         ObjectListAdapter objectListAdapter = new ObjectListAdapter(objectList,view.getContext());
         RecyclerView objectRecyclerView = binding.objectList;

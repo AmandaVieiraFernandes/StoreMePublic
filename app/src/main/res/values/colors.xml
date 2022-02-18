@@ -15,4 +15,7 @@
     <color name="StoreMe_black">#000000</color>
     <color name="StoreMe_white">#FFFFFFFF</color>
 
+    <color name="StoreMe_yellowcard">#80F4B324</color>
+    <color name="StoreMe_pinkcard">#80F6E7D8</color>
+
 </resources>

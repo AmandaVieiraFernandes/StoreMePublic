@@ -44,12 +44,20 @@ public class MainActivity extends AppCompatActivity {
 
                 FragmentManager fm = getSupportFragmentManager();
                 String dialog_name = null;
-                if(tabs.getSelectedTabPosition()==1){
+                int tabposition = tabs.getSelectedTabPosition();
+                String category = getResources().getStringArray(R.array.tabs_string)[tabposition];
+                if(tabposition==1){
                     dialog_name = "Add new media";
+                }else if(tabposition==2){
+                    dialog_name = "Add new wine";
+                }else if(tabposition==3){
+                    dialog_name = "Add new kitchen item";
+                } else if(tabposition==4){
+                    dialog_name = "Add new moving item";
                 }else{
                     dialog_name = "Add new object";
                 }
-                NewObjectDialogFragment addDialogFragment = NewObjectDialogFragment.newInstance(dialog_name);
+                NewObjectDialogFragment addDialogFragment = NewObjectDialogFragment.newInstance(category,dialog_name);
                 addDialogFragment.show(fm, "dialog_newobject");
             }
         });

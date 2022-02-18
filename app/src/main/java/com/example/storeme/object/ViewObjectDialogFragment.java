@@ -41,6 +41,7 @@ public class ViewObjectDialogFragment extends DialogFragment {
         ViewObjectDialogFragment frag = new ViewObjectDialogFragment();
         Bundle args = new Bundle();
         args.putInt("id", object.getObjectId());
+        args.putString("category", object.getObjectCategory());
         args.putString("type", object.getObjectType());
         args.putString("att1", object.getObjectAttribute1());
         args.putString("att2", object.getObjectAttribute2());
@@ -96,7 +97,7 @@ public class ViewObjectDialogFragment extends DialogFragment {
                 saveButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-                        if(myDataBase.updateObject(getArguments().getInt("id"),type_editText.getText().toString(),attribute1_editText.getText().toString(),attribute2_editText.getText().toString())){
+                        if(myDataBase.updateObject(getArguments().getInt("id"),getArguments().getString("category"),type_editText.getText().toString(),attribute1_editText.getText().toString(),attribute2_editText.getText().toString())){
                             //update fragments with deleted object
                             List<Fragment> updFrag = getParentFragmentManager().getFragments();
                             for(Fragment fr : updFrag) {
@@ -147,6 +148,7 @@ public class ViewObjectDialogFragment extends DialogFragment {
                         }
                     }
                     Toast.makeText(v.getContext(), "Object deleted successfully", Toast.LENGTH_SHORT).show();
+                    dismiss();
                 } else{
                     Toast.makeText(v.getContext(), "Problem in deleting object", Toast.LENGTH_SHORT).show();
                 }

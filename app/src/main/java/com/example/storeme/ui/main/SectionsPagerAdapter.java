@@ -17,13 +17,13 @@ import com.example.storeme.R;
  */
 public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
-    @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3, R.string.tab_text_4, R.string.tab_text_5};
+    private static String[] TAB_TITLES;
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
+        TAB_TITLES = mContext.getResources().getStringArray(R.array.tabs_string);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
+        return TAB_TITLES[position];
     }
 
     @Override
